@@ -1,0 +1,47 @@
+/* 
+    Document   : css_pesquisa
+    Created on : 15/05/2011, 16:16:32
+    Author     : Anderson JS
+    Description:
+            Foratando layout do formulário de perguntas e respostas
+*/
+
+body { font: small Verdana, Arial;}
+            ul li {list-style: none; margin: 0;}
+            hr { border: 1px solid #122c9a;}
+            #wrap { width: 100%; margin: 0 auto; background: #fff; padding: 2px;}
+            #wrap fieldset { border: 1px solid #2e6ea3;}            
+            #wrap legend { font: arial; padding: 0 5px;}
+            #wrap #conteudo_detalhes, #wrap #conteudo_pesquisa { width: 98%; margin:5px; padding:5px; background-color: #fff;}
+            #wrap .ul_resp .li_textarea { float: left;}
+            
+            #wrap .info_cliente, #wrap .info_contudo { font: small arial;}            
+            #wrap .info_cliente img { width: 99%; margin: -8px 0 0 6px;}            
+            #wrap .info_cliente ul li { display: inline-block;}                        
+            #wrap .info_cliente li.li_id { font-size: 10px; color: #2e6ea3;}
+            #wrap .info_cliente li.li_dados { margin-left: 10px;}
+            
+            #wrap .info_contudo { font: small arial; color:#000;}
+            .info_contudo li.li_textarea {  margin: 10px; float: right;}
+            .info_contudo textarea { width: 500px; margin: 0 10px; float: right; border: 1px solid #122c9a;}
+            .info_contudo .linha { clear: both; width: 100%; margin: 10px 0; border: 1px solid #c1cdfd;}
+            .info_contudo ul {  margin: 0; padding: 0;}
+            .info_contudo li.li_pergunta { padding: 10px; color: #fff; color: #2e6ea3; background: #dfeffc;
+                                           -webkit-border-radius: 5px;
+                                           -moz-border-radius: 5px;
+                                           border-radius: 5px;                                           
+                                          }
+            .info_contudo ul.ul_resp {font: 11px arial, verdana;}
+            .info_contudo li.li_resp { width: 300px; float: left; text-align: left; margin: 0 0 5px 5px; display: inline-block;}
+            
+            #wrap .bt_salvar { margin: 5px 0; text-align: left; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }
+            .bt_salvar #button { font: 11px Verdana, Arial; 
+                                 margin: 2px 0;
+                                 padding: 5px 8px;
+                                 border: 1px solid #79b7e7;
+                                 border-radius: 3px;
+                                 font-weight: bold;
+                                 color: #2e6ea3;
+                                 background-color: #eaf4fd;
+                               }
+            .bt_salvar #button:hover { color: #1d5987; background-color: #ddecf7;}

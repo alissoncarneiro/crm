@@ -1,0 +1,707 @@
+* {
+   font-family: Arial, Tahoma, Verdana;
+   font-size: 11px;
+   }
+
+body {
+   margin: 0px;
+   }
+
+input {
+   margin: 0px;
+   border-top: 1px solid #000;
+   border-left: 1px solid #000;
+   border-right: 1px solid #c0c0c0;
+   border-bottom: 1px solid #c0c0c0;
+   font-size: 11px;
+   padding-left: 4px
+   }
+
+textarea {
+   margin: 0px;
+   border-top: 1px solid #000;
+   border-left: 1px solid #000;
+   border-right: 1px solid #c0c0c0;
+   border-bottom: 1px solid #c0c0c0;
+   font-size: 11px;
+   padding-left: 4px
+   }
+
+select {
+   margin: 0px;
+   border: 1px solid #000;
+   font-size: 11px;
+   padding-left: 4px
+}
+
+input.check {
+   margin: 0px;
+   border: 0px;
+   font-size: 11px;
+   padding-left: 4px
+   }
+
+input.radio {
+   margin: 0px;
+   border: 0px;
+   font-size: 11px;
+   padding-left: 4px
+}
+
+.radiogroup {
+	border: 1px solid black;
+	width: 25%;
+}
+
+
+#titulo {
+   background: url("../images/cadastro/titulo.jpg");
+   height: 33px;
+   }
+
+#titulo strong{
+   font-size: 14px;
+   font-family: Verdana, Arial;
+   }
+
+#menu {
+   background: url("../images/cadastro/menu.jpg");
+   height: 26px;
+   }
+
+#filtro {
+   margin-top: 1px;
+   background: #f9f9f9;
+   padding: 5px;
+   }
+
+#linha {
+   height: 2px;
+   margin: 2px 0px 1px 0px;
+   font-size: 2px;
+   background: #2c8cbe;
+   }
+
+
+#paginacao {
+   font-weight: normal;
+   padding: 2px;
+   }
+
+#lista {
+   margin: 4px 8px 0px 8px;
+   height: 98%;
+   overflow: auto;
+   font-weight: normal;
+   width: 750px;
+   cursor: default;
+   }
+
+.data {
+   font-family: Courier New, Arial, Tahoma;
+}
+
+#ltable {
+   margin-top: 3px;
+   height: 370px;
+   overflow: auto;
+   font-weight: normal;
+   width: 725px;
+   cursor: default;
+   }
+
+#lfiltro {
+   margin: 0px 0px 10px 100px;
+   height: 90px;
+   overflow: auto;
+   font-weight: normal;
+   width: 580px;
+   float: right;
+   display: inline;
+   vertical-align: middle;
+   }
+
+#lfiltro legend {
+   font-family: Courier, Verdana, Arial;
+   font-size: 12px;
+   color: #333;
+   font-weight: bold;
+}
+
+#lbotoes {
+   margin: 10px 3px 0px 0px;
+}
+
+#lbotoes input{
+   border: 0px;
+   background: url("../images/botoes/botao.gif");
+   height: 28px;
+   width: 78px;
+}
+
+.botao {
+   background-image: url('../images/botaof.gif');
+   margin: 0px;
+   border: 1px solid #000;
+   font-size: 11px;
+   padding-left: 4px
+}
+
+.loadbotao {
+   width: 18px;
+   height: 18px;
+   margin-left: -4px;
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-bottom: 1px solid #333;
+   border-right: 1px solid #333;
+   background-image: url('../images/botoes/loading.gif');
+}
+
+.loadcalendar {
+   width: 18px;
+   height: 18px;
+   background-image: url('../images/agenda.gif');
+   border: 1px solid #666;
+
+}
+
+.colTitulo {
+   border-right: 1px solid #c0c0c0;
+   background: url("../images/browse/titulo.gif");
+   color: #444;
+   height: 19px;
+}
+
+.colTituloOn {
+   border-right: 1px solid #c0c0c0;
+   background: url("../images/browse/tituloon.gif");
+   color: #fff;
+   height: 19px;
+}
+
+.colTituloD {
+   border-right: 1px solid #c0c0c0;
+   background: url("../images/browse/titulo.gif");
+   color: #444;
+   height: 19px;
+}
+
+.colTituloD {
+   border-right: 1px solid #c0c0c0;
+   background: url("../images/browse/tituloon.gif");
+   color: #fff;
+   height: 19px;
+}
+
+.colTituloGde {
+   border-right: 1px solid #c0c0c0;
+   background: url("../images/browse/titulogrd.gif");
+   color: #444;
+   height: 19px;
+   font-size: 10px;
+   width: 105px;
+}
+
+.colTituloGdeOn {
+   border-right: 1px solid #c0c0c0;
+   background: url("../images/browse/tituloon.gif");
+   color: #fff;
+   height: 19px;
+   font-size: 10px;
+}
+
+.tr1 td{
+   background: #fff;
+   height: 22px;
+   border-bottom: 1px solid #B0CBE2;
+   color: #444;
+   cursor: pointer;
+   }
+
+.tr2 td{
+   background: #eee;
+   height: 22px;
+   color: #444;
+   border-bottom: 1px solid #B0CBE2;
+   cursor: pointer;
+   }
+
+.trover td{
+   background: #D8EEFF;
+   height: 22px;
+   color: #000;
+   border-bottom: 1px solid #B0CBE2;
+   cursor: pointer;
+   }
+
+.ltrover td{
+   background: #666;
+   height: 22px;
+   color: #fff;
+   border-bottom: 1px solid #B0CBE2;
+   cursor: pointer;
+   }
+
+td.idCol {
+   color: #006699;
+   font-weight: bold;
+}
+
+span.linhaalerta {
+   color: #FF0000;
+   font-size: 12px;
+   font-weight: bold;
+   text-decoration: blink;
+}
+
+span.valor {
+   font-weight: bold;
+   font-size: 15px;
+}
+
+.ico a{
+   background: url("../images/ico/fundooff.gif");
+   margin: 0px;
+   border: 1px solid #999;
+}
+
+.ico a:hover {
+   border: 1px solid #003399;
+   background: url("../images/ico/fundoon.gif");
+}
+
+.pagOn {
+   font-family: Courier New;
+   font-weight: bold;
+   border: 1px solid #c0c0c0;
+   background: #b2e0f0;
+   padding: 0px 3px 0px 3px;
+}
+
+.pagOff {
+   font-family: Courier New;
+   padding: 1px 4px 1px 4px;
+   cursor: pointer;
+}
+
+#conteudo {
+   margin-top: 1px;
+   height: 100%;
+   overflow: auto;
+   }
+
+#tajuda {
+	margin: 10px;
+   	background: url("../images/cadastro/ajuda.jpg");
+   	position: absolute;
+   	left: 0px;
+   	top: 0px;
+   	width: 748px;
+   	height: 97%;
+   	padding: 10px;
+   	border: 2px groove #99ccff;
+   }
+
+#ajudadesc {
+
+	SCROLLBAR-FACE-COLOR: #ffffff;
+	SCROLLBAR-HIGHLIGHT-COLOR: #ffffff;
+	SCROLLBAR-SHADOW-COLOR: #3366aa;
+	SCROLLBAR-3DLIGHT-COLOR: #3366aa;
+	SCROLLBAR-ARROW-COLOR: #3366aa;
+	SCROLLBAR-TRACK-COLOR: #ffffff;
+	SCROLLBAR-DARKSHADOW-COLOR: #3366aa;
+	margin-top: 1px;
+   	background: #f9f9f9;
+   	position: absolute;
+	display: block;
+    overflow: scroll;
+   	left: 10px;
+   	top: 70px;
+   	width: 100%;
+   	height: 86%;
+   	padding: 4x;
+   	border-top: 0px solid #000;
+   }
+
+#talertaCli {
+	margin: 10px;
+   	background: url("../images/cadastro/alerta.jpg");
+   	position: absolute;
+   	left: 20%;
+   	top: 35%;
+   	width: 441px;
+   	height: 244px;
+   }
+
+.alertaCliDesc {
+	SCROLLBAR-FACE-COLOR: #ffffff;
+	SCROLLBAR-HIGHLIGHT-COLOR: #ffffff;
+	SCROLLBAR-SHADOW-COLOR: #3366aa;
+	SCROLLBAR-3DLIGHT-COLOR: #3366aa;
+	SCROLLBAR-ARROW-COLOR: #3366aa;
+	SCROLLBAR-TRACK-COLOR: #ffffff;
+	SCROLLBAR-DARKSHADOW-COLOR: #3366aa;
+   	position: absolute;
+	display: block;
+    overflow: auto;
+   	left: 19px;
+   	top: 45px;
+   	width: 402px;
+   	height: 180px;
+   	padding: 4x;
+   	border: 0px;
+   }
+
+#alertaCliDesc {
+    margin: 5px;
+   	font-size: 20px;
+   	color: #FF0000; 
+} 	
+
+#loading {
+	margin: 10px;
+   	background: url("../images/cadastro/fundoaux.jpg");
+   	position: absolute;
+   	left: 0px;
+   	top: 0px;
+   	width: 748px;
+   	height: 97%;
+   	padding: 10px;
+   	border: 2px groove #99ccff;
+   }
+#alerta {
+   margin-top: 1px;
+   background: #ffffcc;
+   position: absolute;
+   bottom: 0px;
+   width: 100%;
+   padding: 10x;
+   border-top: 1px solid #000;
+   }
+
+#rodape {
+   background: url("../images/abas.gif");
+   height: 20px;
+   }
+
+.buttonOn {
+   float: left;
+   margin: 3px 4px 3px 4px;
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-right: 1px solid #666;
+   border-bottom: 1px solid #666;
+   cursor: pointer;
+   }
+
+.buttonOff {
+   float: left;
+   margin: 4px 5px 4px 5px;
+   cursor: pointer;
+   }
+
+.filtroOn {
+   border-top: 1px solid #666;
+   border-left: 1px solid #666;
+   border-right: 1px solid #fff;
+   border-bottom: 1px solid #fff;
+   cursor: pointer;
+   }
+
+.filtroOff {
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-right: 1px solid #666;
+   border-bottom: 1px solid #666;
+   cursor: pointer;
+   }
+
+.browse {
+   border: 0px;
+   }
+
+#barra {
+   margin-top: 0px;
+   padding-top: 1px;
+   padding-left: 3px;
+   background: url("../images/browse/titulogrd.gif");
+   height: 22px;
+   width: 100%;
+   font-weight: bold;
+   border: 1px solid #999;
+   }
+
+#barra2 {
+   margin-top: 0px;
+   padding-top: 1px;
+   padding-left: 3px;
+   background: url("../images/browse/titulogrd.gif");
+   height: 22px;
+   width: 100%;
+   font-weight: bold;
+   border: 1px solid #999;
+   }
+
+.abaOn {
+   margin: 0px 0px 0px 5px;
+   display: inline;
+   float: left;
+   background: #fff;
+   border: 1px solid #000;
+   border-top: 1px solid #fff;
+   padding: 1px 3px 1px 3px;
+   }
+
+.abaOff {
+   margin: 0px 0px 0px 5px;
+   display: inline;
+   float: left;
+   background: #d0d0d0;
+   color: #333;
+   border: 1px solid #666;
+   padding: 1px 3px 1px 3px;
+   }
+
+div.linktit {
+	position: absolute;
+	display: inline;
+	text-align: right;
+	left: 0px;
+	margin-left: 645px;
+}
+div.linktit2 {
+	position: absolute;
+	display: inline;
+	text-align: right;
+	left: 0px;
+	margin-left: 615px;
+}
+
+a.linktit {
+ 	font-family: Arial;
+ 	font-size: 11px;
+ 	font-weight: bold;
+   text-decoration: none;
+   border: 0px;
+   color: #0099CC;
+}
+
+a.linktit2 {
+ 	font-family: Arial;
+ 	font-size: 11px;
+ 	font-weight: bold;
+   text-decoration: none;
+   border: 0px;
+   color: #0099CC;
+}
+
+a.linktit:hover {
+ 	font-family: Arial;
+	font-size: 11px;
+ 	font-weight: bold;
+   text-decoration: underline;
+   border: 1px;
+   cursor: pointer;
+}
+
+a.linktit2:hover {
+ 	font-family: Arial;
+	font-size: 11px;
+ 	font-weight: bold;
+   text-decoration: underline;
+   border: 1px;
+   cursor: pointer;
+}
+
+div.agendasemanal1 {
+	padding: 3px;
+	spacing: 0px;
+	height: 70px;
+	width: 101px;
+	vertical-align: middle;
+   	background: #eee;
+   	margin-bottom: 2px;
+   	display: inline;
+}
+div.agendasemanal0 {
+	padding: 3px;
+	spacing: 0px;
+	height: 70px;
+	width: 101px;
+	vertical-align: middle;
+   	background: #eee;
+   	margin-bottom: 2px;
+   	display: inline;
+}
+a.agendasemanal {
+	font-size: 10px;
+}
+a.agendasemanal:hover {
+	font-size: 10px;
+}
+a.agendasemanal:visited {
+	font-size: 10px;
+}
+
+.inputon{
+   background: url("../images/cadastro/input.jpg");
+}
+
+.inputoff{
+   background: #fff;
+}
+
+.lt_lite {
+   background: #e4e4e4;
+   position: absolute;
+   z-index: 1;
+   left: 0px;
+   top: 19px;
+   border: 1px solid #666;
+   border-top: 0px;
+   opacity: 0.94;
+   filter: alpha(opacity=94);
+   -moz-opacity: 0.94;
+}
+
+.lbotaoLite {
+   width: 18px;
+   height: 18px;
+   margin-left: -1px;
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-bottom: 1px solid #333;
+   border-right: 1px solid #333;
+   background-image: url('../images/botoes/ltlite.gif');
+}
+
+
+.lt_list {
+   border: 1px solid #fff;
+   overflow: auto;
+}
+
+.lt_list a {
+   font-size: 11px;
+   padding: 2px;
+   display: block;
+   width: 100%;
+   text-decoration: none;
+   color: #000;
+   border-top: 1px solid #fff;
+   border-bottom: 1px solid #999;
+   overflow: none;
+}
+
+.lt_list a:hover {
+   background: #efefef;
+}
+
+#totais {
+	position: absolute;
+	left: 0px;
+	top: 400px;
+	font-weight: bold;
+	zwidth: '100%';
+	zborder: 1px solid black;
+
+}
+
+#totaislig {
+	position: absolute;
+	left: 0px;
+	top: 380px;
+	font-weight: bold;
+	zwidth: '100%';
+	zborder: 1px solid black;
+
+}
+
+.mail {
+   background: url("../images/ico/btmail.gif");
+   width: 21px;
+   height: 18px;
+   margin-left: -1;
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-bottom: 1px solid #333;
+   border-right: 1px solid #333;
+}
+
+.web {
+   background: url("../images/ico/btweb.gif");
+   width: 23px;
+   height: 18px;
+   margin-left: -1;
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-bottom: 1px solid #333;
+   border-right: 1px solid #333;
+}
+
+.upload {
+   background: url("../images/fundoupload.jpg");
+}
+
+.image {
+   border: 1px solid #999;
+   width: 170px;
+   height: 170px;
+   background: url("../images/fundofoto.jpg");
+}
+
+.image {
+   border: 1px solid #d0d0d0;
+}
+
+.image2 {
+   border: 1px solid #000;
+   width: 170px;
+   height: 170px;
+   background: url("../images/fundofoto.jpg");
+}
+
+.image2 {
+   border: 1px solid #999;
+}
+
+.file {
+   border: 1px solid #666;
+   font-size: 11px;
+   height: 18px;
+}
+
+a.icofoto  {
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-right: 1px solid #999;
+   border-bottom: 1px solid #999;
+}
+
+a.icofoto:hover  {
+   border-top: 1px solid #999;
+   border-left: 1px solid #999;
+   border-right: 1px solid #fff;
+   border-bottom: 1px solid #fff;
+}
+
+.need {
+   color: #0066CC;
+}
+
+.label {
+   width: 120px;
+   text-align: right;
+}
+
+.labelN {
+   width: 120px;
+   text-align: right;
+   color: #0066CC;
+}
+
+.formline {
+   margin-bottom: 10px;
+}

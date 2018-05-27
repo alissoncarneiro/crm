@@ -1,0 +1,1061 @@
+<?php
+
+/**
+
+ * Created by PhpStorm.
+
+ * User: Alisson Carneiro
+
+ * Date: 28/09/2017
+
+ * Time: 13:54
+
+ */
+
+require_once("../functions.php");
+
+
+
+
+
+Class WordpressIcasa{
+
+
+
+    private $serverApi = "45.126.210.98";
+    private $bdApi     = "aps598f9b4a78c76";
+    private $userApi   = "aps598f9b4a78d47";
+    private $passApi   = "403f66517b2a2ad4";
+    private $connApi   = null;
+    private $dataBase  = null;
+
+
+
+//    private $serverApi = "localhost:3306";
+//    private $bdApi     = "icasaimob";
+//    private $userApi   = "root";
+//    private $passApi   = "";
+//    private $connApi   = null;
+//    private $dataBase  = null;
+
+
+
+    private $serverCrm    = "45.126.210.83";
+    private $bdCrm        = "followcrm";
+    private $userCrm      = "followcrm";
+    private $passCrm      = "E3j6kEkZ#FuLt";
+
+    private $connCrm      = null;
+    private $dataBaseCrm  = null;
+
+
+
+    private $arrayPost  = array();
+    private $arrayCaracteristica = array();
+    private $arrCategoria = array();
+    private $arrEndereco = array();
+    private $arrDetalhes = array();
+
+
+    public function __construct(){
+       $this->getConnectApi();
+       $this->getConnectCrm();
+
+        $this->getPostWordpress();
+
+
+
+        #Pegar Cidade & bairro
+
+        //$this->getTaxonomy();
+
+
+
+
+
+
+
+//        $fields = $this->getCustomFields();
+
+        #Garagem Coberta - 1
+
+//        $this->getOptionsGaragemCoberta($fields['wp_estate_add_dropdown_order']['option_value']['1']);
+
+        #Garagem DesCoberta - 2
+
+//        $this->getOptionsGaragemDescoberta($fields['wp_estate_add_dropdown_order']['option_value']['2']);
+
+
+
+        #Categoria do imovel - 3
+
+//        $this->getOptionsCategoriaDoImovel($fields['wp_estate_add_dropdown_order']['option_value']['3']);
+
+//
+
+//        #Condição do imovel - 5
+
+//        $this->getOptionsOcupacao($fields['wp_estate_add_dropdown_order']['option_value']['5']);
+
+
+
+//         #Andares do Imovel - 6
+
+//        $this->getOptionsAndares($fields['wp_estate_add_dropdown_order']['option_value']['6']);
+
+        #Tags imoveis
+
+//            $this->getOptionsStatusList();
+
+
+
+    }
+
+
+
+    private function getConnectApi(){
+
+        $this->connApi =  mysqli_connect($this->serverApi, $this->userApi, $this->passApi) or die(false);
+        $this->dataBase = mysqli_select_db($this->connApi, $this->bdApi) or die(false);
+        $this->charset();
+
+    }
+
+
+
+    private function getConnectCrm(){
+
+        $this->connCrm =  mysqli_connect($this->serverCrm, $this->userCrm, $this->passCrm) or die("Erro Conect Server");
+        $this->dataBase = mysqli_select_db($this->connCrm, $this->bdCrm) or die("Erro Conect Banco");
+        $this->charset();
+
+    }
+
+    private function charset(){
+
+        mysqli_set_charset($this->connApi,'utf8');
+
+        mysqli_query($this->connApi,'SET character_set_connection=utf8');
+
+        mysqli_query($this->connApi,'SET character_set_client=utf8');
+
+        mysqli_query($this->connApi,'SET character_set_results=utf8');
+
+    }
+
+
+
+    private function getPostWordpress(){
+
+
+
+        $postId = '24425';
+
+
+
+        $sqlPostId = "SELECT * FROM wp_posts where id =".$postId;
+
+        $qryPostId = $this->query($sqlPostId,$this->connApi);
+
+        $numPostId = $this->numrows($qryPostId);
+
+        if($numPostId > 0){
+
+            $arrPost = $this->farray($qryPostId);
+            $this->getPost($arrPost);
+
+            $this->getPostsCaracteristicas();
+
+        }
+
+
+
+    }
+
+    private function getPostsCaracteristicas(){
+
+
+
+        $sqlPostMeta = "SELECT * FROM wp_postmeta where post_id =". $this->arrayPost['ID']." AND meta_value != '' AND meta_key not like '%wpseo%'";
+
+        $qryPostMeta = $this->query($sqlPostMeta,$this->connApi);
+
+
+
+        $this->arrCategoria = $this->getCategoria($this->arrayPost['ID']);
+
+
+
+        $arrCaracteristica = $this->getCaracteristicas();
+
+        $arrCaracteristica = array_flip($arrCaracteristica);
+
+
+echo "<pre>";
+print_r($arrCaracteristica)
+;die;
+        $arrDetalhesDoImovel = $this->getDetalhesDoImovel();
+
+
+
+        WHILE($ax = $this->farray($qryPostMeta)){
+
+
+
+            /*
+
+             * Caracteristicas tipo CheckBox
+
+             */
+
+            if(isset($arrCaracteristica[$ax['meta_key']])){
+
+                $this->arrayCaracteristica[$ax['meta_key']] = $ax['meta_value'];
+
+            }
+
+
+
+            /*
+
+             * Complementa o Endereço do Imovel
+
+             */
+
+            if(isset($this->arrEndereco[$ax['meta_key']])){
+
+                $this->arrEndereco[$ax['meta_key']] = $ax['meta_value'];
+
+            }
+
+
+
+            /*
+
+             * Detalhes Do Imovel
+
+             */
+
+            if(isset($arrDetalhesDoImovel[$ax['meta_key']])){
+
+                $this->arrDetalhes[$ax['meta_key']] = $ax['meta_value'];
+
+            }
+
+
+
+
+
+        }
+
+    }
+
+    private function getPost($arrPost){
+
+        $this->arrayPost = array(
+
+            'post_content' => $arrPost['post_content'],
+
+            'post_title' => $arrPost['post_title'],
+
+            'post_status' => $arrPost['post_status'],
+
+            'post_name' => $arrPost['post_name'],
+
+            'post_date' => $arrPost['post_date'],
+
+            'ID' => $arrPost['ID']
+
+        );
+
+    }
+
+    private function getCaracteristicas(){
+
+
+
+        $arrayCaracteristica= array(
+
+            'adega',
+
+            'alarme',
+
+            'aquecimento_central',
+
+            'ar_central',
+
+            'ar_condicionado',
+
+            'area_de_servico',
+
+            'armario_de_cozinha',
+
+            'armarios_embutidos',
+
+            'banheiro_de_empregada',
+
+            'banheiro_social',
+
+            'bicicletario',
+
+            'brinquedoteca',
+
+            'churrasqueira',
+
+            'churrasqueira_coletiva',
+
+            'circuito_de_tv',
+
+            'closet',
+
+            'condominio_fechado',
+
+            'cozinha',
+
+            'cozinha_americana',
+
+            'cozinha_azulejada',
+
+            'cozinha_montanda',
+
+            'cozinha_planejada',
+
+            'deck',
+
+            'dependencia_de_empregada',
+
+            'deposito',
+
+            'despensa',
+
+            'dormitorios_com_armarios',
+
+            'edicula',
+
+            'elevador_de_servico',
+
+            'elevador',
+
+            'empresa_de_monitoramento',
+
+            'entrada_de_servico',
+
+            'escritorio',
+
+            'espaco_gourmet',
+
+            'estacionamento_visitantes',
+
+            'estacionamento',
+
+            'gas_central',
+
+            'gramado',
+
+            'hall',
+
+            'heliponto',
+
+            'hidromassagem',
+
+            'horta',
+
+            'interfone',
+
+            'jardim_de_inverno',
+
+            'jardim',
+
+            'lareira',
+
+            'lavabo',
+
+            'lavanderia',
+
+            'mezanino',
+
+            'mobiliado',
+
+            'pilotis',
+
+            'piscina',
+
+            'piscina_aquecida',
+
+            'piscina_coletiva',
+
+            'piso_elevado',
+
+            'playground',
+
+            'porao',
+
+            'portaria_24hs',
+
+            'portaria',
+
+            'porteiro_eletronico',
+
+            'quadra_de_esportes',
+
+            'quadra_de_tenis',
+
+            'quintal',
+
+            'quiosque',
+
+            'rancho',
+
+            'sacada',
+
+            'sacada_gourmet',
+
+            'sala_de_estar',
+
+            'sala_de_jantar',
+
+            'sala_de_jogos',
+
+            'sala_de_tv',
+
+            'sala_fitness',
+
+            'salao_de_festas',
+
+            'sauna',
+
+            'sauna_coletiva',
+
+            'seguranca',
+
+            'spa',
+
+            'suite',
+
+            'terraco_coletivo',
+
+            'varanda',
+
+            'varanda_gourmet',
+
+            'ventilador_de_teto',
+
+            'vigilancia_24h',
+
+            'vista_panoramica',
+
+            'vista_para_o_mar',
+
+            'zelador',
+
+            'moveis_planejados',
+
+            'forno_a_lenha'
+
+        );
+
+        return $arrayCaracteristica;
+
+    }
+
+    private function getCategoria($id){
+
+        $sqlCategoria = "select
+
+                          wtt.taxonomy,
+
+                          wt.name,
+
+                          wt.slug
+
+                            from wp_term_relationships as wtr
+
+                        
+
+                              inner join wp_term_taxonomy as wtt
+
+                              on wtt.term_taxonomy_id = wtr.term_taxonomy_id
+
+                        
+
+                              inner join wp_terms as wt
+
+                              on wt.term_id = wtt.term_id
+
+                        where wtr.object_id= ".$id;
+
+
+
+        $qryCategoria = $this->query($sqlCategoria,$this->connApi);
+
+        $arrCats = array();
+
+        while($arrCat = $this->farray($qryCategoria)){
+
+            $arrCats[$arrCat['taxonomy']] = $arrCat['name'];
+
+        }
+
+
+
+        $this->arrCategoria = array(
+
+            "tipo_venda"    => $arrCats['property_action_category'],
+
+            "tipo_imovel"   => $arrCats['property_category']
+
+        );
+
+        $this->arrEndereco = array(
+
+            "bairro"            => $arrCats['property_area'],
+
+            "cidade"            => $arrCats['property_city'],
+
+            "pais"              => $arrCats['property_county_state'],
+
+            'property_zip'      => '',
+
+            'property_address'  => '',
+
+            'n-imovel'          => '',
+
+            'ncomplemento'      => '',
+
+            'property_country'  => '',
+
+            'property_latitude' => '',
+
+            'property_longitude'=> ''
+
+        );
+
+    }
+
+    private function getDetalhesDoImovel(){
+
+        $this->arrDetalhes = array(
+
+            'property-year' => '',
+
+            'property_rooms' => '',
+
+            'property_bedrooms' => '',
+
+            'property_bathrooms' => '',
+
+            'n-suite' => '',
+
+            'vl-condominio' => '',
+
+            'n-condominio' => '',
+
+            'r-condominio' => '',
+
+            'garagem-coberta' => '',
+
+            'garagem-descoberta' => '',
+
+            'property_size' => '',
+
+            'property_lot_size' => '',
+
+            'owner_notes' => '',
+
+            'property_status' => '',
+
+            'ocupacao' => '',
+
+            'property_price' => '',
+
+            'mls' => ''
+
+
+
+
+
+        );
+
+
+
+        return $this->arrDetalhes;
+
+    }
+
+    private function getTaxonomy(){
+echo "3";
+        $sqlTaxonomy ="SELECT * FROM wp_options WHERE option_value like '%property_area%' and option_name like 'taxonomy_%' and option_value like '%cityparent%'  ";
+
+        $qryTaxonomy = $this->query($sqlTaxonomy, $this->connApi);
+
+        $numTaxonomy = $this->numrows($qryTaxonomy);
+
+        if($numTaxonomy > 0){
+
+
+
+            while($arrTaxonomy = $this->farray($qryTaxonomy)){
+
+                $value = unserialize($arrTaxonomy['option_value']);
+
+                $term_id = explode('_',$arrTaxonomy['option_name']);
+
+
+
+                $arrData[$value['cityparent']][$term_id[1]] = array(
+
+                    'term_id'       => $term_id[1],
+
+                    'cityparent'    => $value['cityparent']
+
+                );
+
+                $arrDataTermId[] = $term_id[1];
+
+            }
+
+            $this->getBairro($arrData, $arrDataTermId);
+
+        }
+
+    }
+
+    private function getBairro($arrData, $arrDataTermId){
+
+        $arrDataTermId = $this->getTermid(implode(",", $arrDataTermId));
+
+        $arrDataCidade = $this->getCidadeid();
+
+
+
+
+
+        $arrBairroInsert = array();
+
+        $cont = 0;
+
+        foreach($arrData as $keyCidade => $valCidade){
+
+            foreach($valCidade as $keyValCidade => $valValCidade) {
+
+                $arrBairroInsert = array(
+
+                    'numreg'      => $valValCidade['term_id'],
+
+                    'nome_bairro' => utf8_decode($arrDataTermId[$valValCidade['term_id']]['name']),
+
+                    'slug'        => $arrDataTermId[$valValCidade['term_id']]['slug'],
+
+                    'id_cidade'   => $arrDataCidade[$valValCidade['cityparent']]['term_id']
+
+                );
+
+                $queryBairro = AutoExecuteSql('mysql','is_bairro_imoveis',$arrBairroInsert,'INSERT');
+
+                if($this->query($queryBairro,$this->connCrm))
+
+                    $cont ++;
+
+            }
+
+        }
+
+    }
+
+    private function getCustomFields(){
+
+
+
+        $sqlFields= "SELECT * FROM wp_options  where option_name in('wp_estate_add_field_name','wp_estate_add_dropdown_order');";
+
+        $qryFields = $this->query($sqlFields,$this->connApi);
+
+        $numFields = $this->numrows($qryFields);
+
+        if($numFields > 0) {
+
+            while($arrFields = $this->farray($qryFields)){
+
+                $arrFieldsDropdownOrder[$arrFields['option_name']] = array(
+
+                    'option_value' => unserialize($arrFields['option_value'])
+
+                );
+
+            }
+
+        }
+
+        return $arrFieldsDropdownOrder;
+
+    }
+
+    private function getOptionsGaragemCoberta($data = null){
+
+
+
+        $cont = 1;
+
+        $data = explode(",",$data);
+
+        unset($data[0]);
+
+
+
+        foreach($data as $keyGaragemCoberta) {
+
+
+
+            $arrInsert = array(
+
+                'numreg'      => $keyGaragemCoberta,
+
+                'garagem_coberta' => utf8_decode($keyGaragemCoberta)
+
+            );
+
+            $query = AutoExecuteSql('mysql','is_imoveis_garagem_coberta',$arrInsert,'INSERT');
+
+            if($this->query($query,$this->connCrm))
+
+                $cont ++;
+
+
+
+        }
+
+    }
+
+    private function getOptionsGaragemDescoberta($data = null){
+
+        $cont = 1;
+
+        $data = explode(",",$data);
+
+        unset($data[0]);
+
+
+
+        foreach($data as $keyGaragemCoberta) {
+
+
+
+            $arrInsert = array(
+
+                'numreg'      => $keyGaragemCoberta,
+
+                'garagem_descoberta' => utf8_decode($keyGaragemCoberta)
+
+            );
+
+            $query = AutoExecuteSql('mysql','is_imoveis_garagem_descoberta',$arrInsert,'INSERT');
+
+            if($this->query($query,$this->connCrm))
+
+                $cont ++;
+
+
+
+        }
+
+    }
+
+    private function getOptionsAndares($data = null){
+
+        $cont = 1;
+
+        $data = explode(",",$data);
+
+        unset($data[0]);
+
+
+
+        foreach($data as $key) {
+
+
+
+            $arrInsert = array(
+
+                'numreg'      => $key,
+
+                'stories_number' => utf8_decode($key)
+
+            );
+
+            $query = AutoExecuteSql('mysql','is_imoveis_stories_number',$arrInsert,'INSERT');
+
+            if($this->query($query,$this->connCrm))
+
+                $cont ++;
+
+
+
+        }
+
+    }
+
+    private function getOptionsOcupacao($data = null){
+
+        $cont = 1;
+
+        $data = explode(",",$data);
+
+        unset($data['0']);
+
+
+
+        foreach($data as $key => $val) {
+
+
+
+            $arrInsert = array(
+
+                'numreg'      => $key,
+
+                'condicao_imovel' => utf8_decode($val),
+
+                'condicao_imovel_taxonomy' => utf8_decode($val)
+
+            );
+
+            $query = AutoExecuteSql('mysql','is_imoveis_property_status',$arrInsert,'INSERT');
+
+            if($this->query($query,$this->connCrm))
+
+                $cont ++;
+
+
+
+        }
+
+
+
+    }
+
+    private function getOptionsCategoriaDoImovel($data = null){
+
+        $cont = 1;
+
+        $data = explode(",",$data);
+
+        unset($data['0']);
+
+
+
+        foreach($data as $key => $val) {
+
+
+
+            $arrInsert = array(
+
+                'numreg'      => $key,
+
+                'imoveis_categoria' => utf8_decode($val),
+
+                'imoveis_categoria_taxonomy' => utf8_decode($val)
+
+            );
+
+            $query = AutoExecuteSql('mysql','is_imoveis_categoria_imovel',$arrInsert,'INSERT');
+
+            if($this->query($query,$this->connCrm))
+
+                $cont ++;
+
+
+
+        }
+
+    }
+
+    private function getOptionsStatusList(){
+
+        $sqlFields= "SELECT * FROM wp_options  where option_name in('wp_estate_status_list');";
+
+        $qryFields = $this->query($sqlFields,$this->connApi);
+
+        $numFields = $this->numrows($qryFields);
+
+        $cont = 0;
+
+        if($numFields > 0) {
+
+            $arrFields = $this->farray($qryFields);
+
+            $arrFieldss = explode(",", $arrFields['option_value']);
+
+
+
+
+
+            foreach($arrFieldss as $key => $val) {
+
+
+
+                $arrInsert = array(
+
+                    'tags_condicao' => utf8_decode($val),
+
+                    'tags_condicao_taxonomy' => utf8_decode($val)
+
+                );
+
+                $query = AutoExecuteSql('mysql','is_imoveis_tags_condicao',$arrInsert,'INSERT');
+
+                if($this->query($query,$this->connCrm))
+
+                    $cont ++;
+
+
+
+            }
+
+
+
+        }
+
+
+
+    }
+
+    private function getCidadeid(){
+
+        $sqlCidade = "select
+
+                      te.term_id,
+
+                      tx.taxonomy,
+
+                      te.name,
+
+                      te.slug
+
+                     from wp_term_taxonomy as tx
+
+                    inner join wp_terms as te
+
+                          on te.term_id = tx.term_id
+
+                        where tx.taxonomy = 'property_city'
+
+                      order by te.name";
+
+        $qryCidade = $this->query($sqlCidade, $this->connApi);
+
+        $numCidade = $this->numrows($qryCidade);
+
+        if($numCidade > 0){
+
+            while($arr = $this->farray($qryCidade)){
+
+                $arrCidade[$arr['name']] = array(
+
+                    'term_id'   => $arr['term_id'],
+
+                    'name'      => $arr['name'],
+
+                    'slug'      => $arr['slug']
+
+                );
+
+            }
+
+        }
+
+        return $arrCidade;
+
+    }
+
+    private function getTermid($arrDataTermId){
+
+        $sqlTerm = "SELECT * FROM wp_terms  where term_id in($arrDataTermId)";
+
+        $qryTerm = $this->query($sqlTerm, $this->connApi);
+
+        $numTerm = $this->numrows($qryTerm);
+
+
+
+        if($numTerm > 0){
+
+            while($arrTerm = $this->farray($qryTerm)){
+
+                $arrDataTerm[$arrTerm['term_id']]= array(
+
+                    'term_id'  => $arrTerm['term_id'],
+
+                    'name'  => $arrTerm['name'],
+
+                    'slug'    => $arrTerm['slug']
+
+                );
+
+            }
+
+           return $arrDataTerm;
+
+        }
+
+    }
+
+    private function query($queryparam, $conexao){
+
+
+
+        $queryparam = str_replace(", ,",", NULL,",$queryparam);
+
+        $queryparam = str_replace(",,",", NULL,",$queryparam);
+
+        $queryparam = str_replace(",)",", NULL)",$queryparam);
+
+        $queryparam = str_replace(", )",", NULL)",$queryparam);
+
+        $queryparam = str_replace("(,","( NULL,",$queryparam);
+
+        $queryparam = str_replace("( ,","( NULL,",$queryparam);
+
+        $queryparam = str_replace("()","( NULL)",$queryparam);
+
+        $queryparam = str_replace("( )","( NULL)",$queryparam);
+
+
+
+echo$queryparam."<br>";        $queryexec = mysqli_query($conexao, $queryparam);
+
+
+
+        if(!$queryexec){
+
+            if(QueryDebug == 1){
+
+
+
+                echo mysqli_error($conexao);
+
+            }
+
+            return false;
+
+        }
+
+        return $queryexec;
+
+    }
+
+    private function farray($queryparam) {
+
+        $queryexec = mysqli_fetch_array( $queryparam);
+
+        return $queryexec;
+
+    }
+
+    private function numrows($queryparam) {
+
+        $queryexec = mysqli_num_rows($queryparam);
+
+        return $queryexec;
+
+    }
+
+}

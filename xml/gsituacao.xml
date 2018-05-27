@@ -1,0 +1,9 @@
+<graphData title="Total 1,00" subtitle="">
+	<pie defaultAltText="" legendStatus="on">
+		<wedge title="1,00-Interior" kDelim="," value="100" color="0x00FF00" labelText="100,000%" url="javascript: abre_tela_nova('gera_cad_lista.php?pfuncao=opo_cad_lista&pdrilldown=1&pfixo= is_oportunidade.`id_regiao` @igual @s3@s&psql_filtro=   id_opor_ciclo_fase @igual @s12@s &pdescr_filtro=','grafdet','900','590','1');" altText="1 : Interior - Clique para exibir os detalhes"/>
+	</pie>
+	<graphInfo>
+		<![CDATA[]]>
+	</graphInfo>
+	<chartColors  docBorder="0xffffff"  docBg1="0xffffff"  docBg2="0xffffff"  title="0x1c6cae"  subtitle="0x666666"  misc="0x999999"  altBorder="0x2c8cbe"  altBg="0xffffff"  altText="0x64798d"  graphText="0x33485c"  graphTextShadow="0xf9f9f9"  pieBorder="0xffffff"  pieBorderHilite="0x990033"  legendBorder="0x2c8cbe"  legendBg1="0xffffff"  legendBg2="0xffffff"  legendText="0x64798d"  legendColorKeyBorder="0x777777"  scrollBar="0xdfdfdf"  scrollBarBorder="0xfafafa"  scrollBarTrack="0xeeeeee"  scrollBarTrackBorder="0xcccccc"  />
+</graphData>

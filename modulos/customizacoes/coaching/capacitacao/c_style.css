@@ -1,0 +1,55 @@
+/*
+    Document   : c_style
+    Created on : 21/07/2011, 15:04:39
+    Author     : Alex
+*/
+
+/*
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.c_campo_data{
+    width:65px;
+    text-align: center;
+}
+.c_tabela_itens{
+    border: 1px solid #ACC6DB;
+}
+.c_titulo_tabela{
+    font-weight: bold;
+    color: #345C7D;
+    background-color: #DAE8F4;
+    text-align: left;
+    padding-left: 5px;
+}
+.c_campo_dt{
+    width: 60px;
+    text-align: center;
+}
+.c_campo_vl{
+    width: 50px;
+    text-align: right;
+}
+.c_title{
+    font-size: 12px;
+    font-weight: bold;
+}
+.c_tabela_lista_presenca{
+    border-collapse: collapse;
+}
+.c_tabela_lista_presenca tr td {
+    border:2px solid #000000;
+}
+.c_campo_obrigatorio{
+    font-weight: bold;
+    color: #00F;
+}
+.c_h2{
+    font-size: 16px;
+    font-weight: bold;
+    color: #345C7D;
+}
+.c_td_label{
+    text-align: left;
+    font-weight: bold;
+}

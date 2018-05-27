@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/oasis-40/!svn/ver/842/trunk/modulos/venda
+END
+p2_vl_unitario.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/oasis-40/!svn/ver/838/trunk/modulos/venda/p2_vl_unitario.php
+END
+p1_venda.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/oasis-40/!svn/ver/838/trunk/modulos/venda/p1_venda.php
+END
+p2_venda.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/oasis-40/!svn/ver/786/trunk/modulos/venda/p2_venda.php
+END
+p4_venda.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/oasis-40/!svn/ver/826/trunk/modulos/venda/p4_venda.php
+END
+log_calculo_item.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/oasis-40/!svn/ver/745/trunk/modulos/venda/log_calculo_item.php
+END
+p1_venda_post.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/oasis-40/!svn/ver/808/trunk/modulos/venda/p1_venda_post.php
+END
+p1_sugere_cfop_cliente.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/oasis-40/!svn/ver/838/trunk/modulos/venda/p1_sugere_cfop_cliente.php
+END
+p4_venda_post.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/oasis-40/!svn/ver/818/trunk/modulos/venda/p4_venda_post.php
+END
+includes.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/oasis-40/!svn/ver/838/trunk/modulos/venda/includes.php
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/oasis-40/!svn/ver/838/trunk/modulos/venda/index.php
+END
+p2_venda_tabela_itens.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/oasis-40/!svn/ver/818/trunk/modulos/venda/p2_venda_tabela_itens.php
+END
+seleciona_envio_email.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/oasis-40/!svn/ver/826/trunk/modulos/venda/seleciona_envio_email.php
+END
+estilo_venda.css
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/oasis-40/!svn/ver/826/trunk/modulos/venda/estilo_venda.css
+END
+dado_padrao_conta.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/oasis-40/!svn/ver/842/trunk/modulos/venda/dado_padrao_conta.php
+END
+p4_venda_participantes.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/oasis-40/!svn/ver/745/trunk/modulos/venda/p4_venda_participantes.php
+END
+p2_adiciona_item.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/oasis-40/!svn/ver/724/trunk/modulos/venda/p2_adiciona_item.php
+END
+det_produto.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/oasis-40/!svn/ver/838/trunk/modulos/venda/det_produto.php
+END

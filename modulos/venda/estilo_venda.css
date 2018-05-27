@@ -1,0 +1,298 @@
+/* 
+    Document   : estilo_venda.css
+    Created on : 19/10/2010, 17:36:46
+    Author     : Alex
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+body div.qtip div.content{
+   padding: 0;
+   margin: 0;
+   height: auto; min-height: auto;
+   width: auto; min-width: auto;
+}
+legend{
+    font-weight:bold;
+    font-size:14px;
+}
+.dicn{display:inline-block; padding:10px; width:160px; height:160px; border:1px solid #eee; text-align:center; margin:20px; text-decoration:none;}
+.dicn:hover{border:1px solid #999; background:#eee}
+.dicn p{padding:10px 0 0; margin:0; color:#000; font-weight:bold; display:block;}
+.dicn span{color:#F00;}
+.dicn img{border:none;}
+
+.dicn_medium{display:inline-block; padding:15px; width:75px; height:90px; border:1px solid #eee; text-align:center; margin:20px; text-decoration:none;}
+.dicn_medium:hover{border:1px solid #999; background:#eee;}
+.dicn_medium p{padding:10px 0 0; margin:0;color:#000; font-weight:bold; display:block; padding:5px 0;}
+.dicn_medium img{border:none;}
+
+.venda_texto_grande_negrito{
+    font-size:16px;
+    font-weight: bold;
+}
+
+#conteudo-ajax {
+    display:none;
+    width:600px;
+    max-height:400px;
+    overflow:auto;
+    border:4px dotted #CCC;
+    padding:10px 20px;
+    background:#eee;
+    position:absolute;
+    top:100px;
+    left:154px;
+    z-index:9999;
+}
+#conteudo-ajax h2 {
+    background:#393;
+    font-size:1em;
+}
+#conteudo-ajax  h3 {
+    font-size:1em;
+}
+#conteudo-ajax  .fechar {
+    display:block;
+    text-align:right;
+    font-size:0.9em;
+    font-weight:bold;
+    color:#080;
+    cursor:pointer;
+}
+#mask {
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:9000;
+    background-color:#999;
+    display:none;
+}
+#btn_salvar{
+    width:216px;
+    height:64px;
+    background:url(../btn_adicionar_os_itens.jpg) no-repeat;
+    cursor:pointer;
+}
+.tr_1{
+    background-color:#E9E9E9;
+}
+.tr_over{
+    background-color:#DAE8F4;
+}
+.firstborder {
+    border-bottom:solid 1px #B6D2EC;
+    border-right:solid 1px #B6D2EC;
+}
+.borda {
+    border-bottom:solid 1px #B6D2EC;
+    border-right:solid 1px #B6D2EC;
+}
+.bordavazia {
+    border-bottom:solid 1px #B6D2EC;
+    border-right:solid 1px #B6D2EC;
+    border-left:solid 1px #B6D2EC;
+    color: #FFF;
+}
+.btn {
+    display: block;
+    position: relative;
+    background: #000;
+    padding: 5px;
+    float: center;
+    color: #FFF;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn.blue { background: #2ae; }
+.btn.blue { border-color: #000;}
+
+.venda_span_header{
+    color:#FF0000;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight:bold;
+}
+.venda_span_header span{
+    font-size: 20px;
+}
+
+#venda_topo{
+    width: 100%;
+    background-image: url('../../images/topo_fundo.png');
+}
+.textright{
+    text-align: right;
+}
+.venda_campo_data{
+    width:65px;
+    text-align: center;
+}
+.venda_campo_textarea{
+    font-family:Courier New;
+    font-size:12px;
+}
+.venda_campo_lupapopup{
+    width:75px;
+}
+.venda_campo_lupapopupdescr{
+    width:300px;
+}
+.venda_campo_comissao{
+    width:40px;
+    text-align: right;
+}
+.venda_span_desc_max_permitido{
+    color:#FF0000;
+    font-weight: bold;
+    font-size: 10px;
+    cursor: help;
+}
+.venda_div_campo{
+    display: inline;
+}
+
+.venda_input_readonly{
+    background-color: #EAEAEA;
+}
+.venda_subtitulo{
+    text-align: left;
+    color: #0099FF;
+    font-size: 14px;
+    font-weight: bold;
+}
+.venda_span_preco_produto{
+    text-align: left;
+    color: #FF0000;
+    font-size: 14px;
+    font-weight: bold;
+}
+.venda_span_preco_produto span{
+    text-align: left;
+    color: #FF0000;
+    font-size: 14px;
+    font-weight: bold;
+}
+.venda_tabela_itens{
+    border: 1px solid #ACC6DB;
+}
+.venda_titulo_tabela{
+    font-weight: bold;
+    color: #345C7D;
+    background-color: #DAE8F4;
+    text-align: left;
+    padding-left: 5px;
+}
+.venda_campo_desconto{
+    width: 40px;
+    text-align: right;
+}
+.venda_campo_qtde{
+    width: 60px;
+    text-align: right;
+}
+.venda_campo_obs{
+    
+}
+.venda_tr_item_alterado{
+    background: #FFCC66;
+}
+.venda_campo_vl_unitario{
+    width: 50px;
+    text-align: right;
+}
+.venda_campo_vl{
+    width: 50px;
+    text-align: right;
+}
+
+.venda_btn_rem_produto{
+    cursor: pointer;
+}
+
+.info, .success, .warning, .error, .validation {
+font-size: 14px;
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:8px 10px 8px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+.info {
+  color: #00529B;
+  background-color: #BDE5F8;
+  background-image: url('img/info.png');
+}
+.success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  background-image:url('img/success.png');
+}
+.warning {
+  color: #9F6000;
+  background-color: #FEEFB3;
+  background-image: url('img/warning.png');
+}
+.error {
+  color: #D8000C;
+  background-color: #FFBABA;
+  background-image: url('img/error.png');
+}
+
+.jquery-dialog{
+    font-weight: bold;
+}
+#venda_modal_mask{
+    background: #000 url('img/ajax_loading_bar.gif') no-repeat center;
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    display: none;
+}
+
+#venda_div_aceite_politica_comercial h1{
+    color: #FF0000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#venda_div_aceite_politica_comercial h2{
+    color: #FF0000;
+    font-size: 18px;
+    font-weight: bold;
+}
+#chk_aceite_politica_comercial{
+    border: none;
+}
+
+.campo_azul{
+    color: #0000FF;
+}
+
+.campo_verde{
+    color: #008B00;
+}
+
+.campo_obrigatorio{
+    font-weight: bold;
+}
+
+.venda_btn_atualizar_todos_descontos{
+    vertical-align: bottom;
+}
+#ul_arquivos_anexos ul li{
+    padding-left: 0px;
+    color:#FF0000;
+}

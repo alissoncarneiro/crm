@@ -1,0 +1,12 @@
+<graphData title="Total 14" subtitle="">
+	<pie defaultAltText="" legendStatus="on">
+		<wedge title="Fornecedor" kDelim="," value="7.14285714286" color="0x00FF00" labelText="7,142%" url="javascript: abre_tela_nova('../../gera_cad_lista.php?pfuncao=empresas&pdrilldown=1&pfixo= id_relac = @sFOR@s@and is_empresas.id_relac <> @sBRC@s ','grafdet','900','590','1');" altText="1 : Fornecedor - Clique para exibir os detalhes"/>
+		<wedge title="Parceria" kDelim="," value="21.4285714286" color="0xFF0000" labelText="21,428%" url="javascript: abre_tela_nova('../../gera_cad_lista.php?pfuncao=empresas&pdrilldown=1&pfixo= id_relac = @sPAR@s@and is_empresas.id_relac <> @sBRC@s ','grafdet','900','590','1');" altText="3 : Parceria - Clique para exibir os detalhes"/>
+		<wedge title="Prospect" kDelim="," value="64.2857142857" color="0x0000FF" labelText="64,285%" url="javascript: abre_tela_nova('../../gera_cad_lista.php?pfuncao=empresas&pdrilldown=1&pfixo= id_relac = @sPRO@s@and is_empresas.id_relac <> @sBRC@s ','grafdet','900','590','1');" altText="9 : Prospect - Clique para exibir os detalhes"/>
+		<wedge title="SELF" kDelim="," value="7.14285714286" color="0xFF6600" labelText="7,142%" url="javascript: abre_tela_nova('../../gera_cad_lista.php?pfuncao=empresas&pdrilldown=1&pfixo= id_relac = @sSELF@s@and is_empresas.id_relac <> @sBRC@s ','grafdet','900','590','1');" altText="1 : SELF - Clique para exibir os detalhes"/>
+	</pie>
+	<graphInfo>
+		<![CDATA[]]>
+	</graphInfo>
+	<chartColors  docBorder="0xffffff"  docBg1="0xffffff"  docBg2="0xffffff"  title="0x1c6cae"  subtitle="0x666666"  misc="0x999999"  altBorder="0x2c8cbe"  altBg="0xffffff"  altText="0x64798d"  graphText="0x33485c"  graphTextShadow="0xf9f9f9"  pieBorder="0xffffff"  pieBorderHilite="0x990033"  legendBorder="0x2c8cbe"  legendBg1="0xffffff"  legendBg2="0xffffff"  legendText="0x64798d"  legendColorKeyBorder="0x777777"  scrollBar="0xdfdfdf"  scrollBarBorder="0xfafafa"  scrollBarTrack="0xeeeeee"  scrollBarTrackBorder="0xcccccc"  />
+</graphData>

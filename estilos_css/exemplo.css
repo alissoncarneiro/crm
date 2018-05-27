@@ -1,0 +1,247 @@
+* {
+   font-family: Arial, Tahoma, Verdana;
+   font-size: 12px;
+   }
+
+body {
+   margin: 10px 0px 0px 0px;
+   background: #999;
+   }
+
+input {
+   margin: 0px;
+   border: 1px solid #000;
+   font-size: 11px;
+   padding-left: 4px
+   }
+
+#titulo {
+   background: url("../img/titulo.jpg");
+   height: 44px;
+   }
+
+#titulo strong{
+   font-size: 14px;
+   font-family: Verdana, Arial;
+   }
+
+#menu {
+   background: url("../img/cadastro/menu.jpg");
+   height: 26px;
+   }
+   
+#mlinks {
+   width: 670px;
+   float: right;
+   height: 26px;
+}
+
+#filtro {
+   margin-top: 1px;
+   background: url("../img/cadastro/menu.jpg");
+   padding: 10px;
+   }
+
+#linha {
+   height: 2px;
+   margin: 2px 0px 1px 0px;
+   font-size: 2px;
+   background: #edc611;
+   }
+
+#barra {
+   margin-top: 3px;
+   background: #b2e0f0;
+   display: inline;
+   float: left;
+   height: 25px;
+   width: 100%;
+   font-weight: bold;
+   border-top: 1px solid #fff;
+   }
+
+#ativaBrowse {
+   display: inline;
+   float: right;
+   background: #0099cc;
+   margin-top: 1px;
+   padding-top: 0px;
+   width: 470px;
+   height: 25px;
+   cursor: pointer;
+   }
+
+#browse {
+   position: absolute;
+   display: none;
+   right: 0px;
+   top: 88px;
+   height: 470px;
+   margin-top: 1px;
+   background: #0099cc;
+   width: 470px;
+   z-index: 1;
+   }
+
+#paginacao {
+   font-weight: normal;
+   padding: 2px;
+   }
+
+#lista {
+   background: #fbfbfb;
+   margin: 0px 3px 3px 3px;
+   height: 441px;
+   overflow: auto;
+   font-weight: normal;
+   width: 460px;
+   border: 1px solid #fbfbfb;
+   cursor: default;
+   }
+
+.colTitulo td{
+   border-top: 1px solid #efefef;
+   border-left: 1px solid #efefef;
+   border-right: 1px solid #000;
+   border-bottom: 1px solid #000;
+   background: #d0d0d0;
+   text-align: center;
+}
+
+.tr1 {
+   background: #fff;
+   }
+
+.tr2 {
+   background: #efefef;
+   }
+
+.idCol {
+   background: #b2e0f0;
+   color: #006699;
+   font-weight: bold;
+   text-align: center;
+}
+
+.pagOn {
+   border: 1px solid #000;
+   background: #b2e0f0;
+   padding: 3px;
+}
+
+.pagOff {
+   padding: 4px;
+   cursor: pointer;
+}
+
+#conteudo {
+   margin: 0px;
+   height: 100%;
+   overflow: auto;
+   background: url("../img/cadastro/fundo.jpg") no-repeat;
+   }
+
+#alerta {
+   height: 100px;
+   margin-top: 1px;
+   background: #ffffcc;
+   position: absolute;
+   bottom: 0px;
+   width: 100%;
+   padding: 10x;
+   border-top: 1px solid #000;
+   }
+
+#rodape {
+   background: url("../img/foot.jpg");
+   height: 23px;
+   font-size: 10px;
+   color: #fff;
+   border-top: 1px solid #000;
+   }
+   
+#rodape a{
+   font-size: 10px;
+   color: #FFCC00;
+   text-decoration: none;
+   }
+
+#rodape a:hover {
+   text-decoration: underline;
+   }
+
+.buttonOn {
+   border-top: 1px solid #999;
+   border-left: 1px solid #999;
+   border-right: 1px solid #fff;
+   border-bottom: 1px solid #fff;
+   cursor: pointer;
+   }
+
+.buttonOff {
+   border-top: 1px solid #fff;
+   border-left: 1px solid #fff;
+   border-right: 1px solid #999;
+   border-bottom: 1px solid #999;
+   cursor: pointer;
+   }
+
+.buttonLeft {
+   float: left;
+   margin: 3px 1px 0px 11px;
+   border: 0px;
+   cursor: pointer;
+   }
+
+.buttonLeftOff {
+   float: left;
+   margin: 3px 0px 0px 10px;
+   border: 0px;
+   cursor: pointer;
+   border-bottom: 1px solid #999;
+   border-right: 1px solid #999;
+   border-left: 1px solid #fff;
+   border-top: 1px solid #fff;
+   }
+
+.buttonRight {
+   float: right;
+   margin: 3px 11px 0px 1px;
+   cursor: pointer;
+   border: 0px;
+   }
+
+.buttonRightOff {
+   float: right;
+   margin: 3px 10px 0px 0px;
+   cursor: pointer;
+   border: 0px; ]
+   border-bottom: 1px solid #999;
+   border-right: 1px solid #999;
+   border-left: 1px solid #fff;
+   border-top: 1px solid #fff;
+   }
+
+.browse {
+   border: 0px;
+   }
+
+.abaOn {
+   margin: 0px 0px 0px 5px;
+   display: inline;
+   float: left;
+   background: #fff;
+   border: 1px solid #000;
+   border-top: 1px solid #fff;
+   padding: 1px 3px 1px 3px;
+   }
+
+.abaOff {
+   margin: 0px 0px 0px 5px;
+   display: inline;
+   float: left;
+   background: #d0d0d0;
+   color: #333;
+   border: 1px solid #666;
+   padding: 1px 3px 1px 3px;
+   }

@@ -1,0 +1,50 @@
+<?php
+
+/*
+ * is_id_produto_compl.php
+ * Autor: Bruno
+ * 24/01/2011 17:08
+ * -
+ *
+ * Log de Alterações
+ * 2011-02-07 Alex Corrigido nome da tabela e nome de colunas, e arquivo recriado com o nome correto
+ */
+session_start();
+set_time_limit(600); /* 10 minutos */
+include('../../../conecta.php');
+include('../../../functions.php');
+include('../../../classes/class.impODBCProgressTable.php');
+
+$ArrayConf = parse_ini_file('../../../conecta_odbc_erp_datasul.ini',true);
+$CnxODBC = ConectaODBCErpDatasul($ArrayConf,'partnumber');
+if(!$CnxODBC){
+    echo 'Não foi possível estabelecer uma conexão com o ERP.';
+    exit;
+}
+
+$ArDepara = array(
+                    'it-codigo' 	=> 'id_produto',
+                    'part-number' 	=> 'id_produto_cod_compl',
+                    'descr-original' 	=> 'descr_produto_compl'
+                  );
+
+$ArChaves = array('it-codigo');
+
+$ArCamposObrigatorios = array('id_produto');
+
+$Imp = new impODBCProgressTable();
+$Imp->setCnxOdbc($CnxODBC);
+$Imp->setTabelaOrigem('pub."part-number"');
+$Imp->setTabelaDestino('is_produto_cod_compl');
+$Imp->setArDepara($ArDepara);
+$Imp->setChaves($ArChaves);
+$Imp->setArCamposObrigatorios($ArCamposObrigatorios);
+
+$Imp->setCampoDepara('id_produto');
+$Imp->setCampoDeparaTabelaCRM('is_produto');
+$Imp->addCampoDeparaTabelaChaveCRM('id_produto_erp');
+
+$Imp->Importa();
+$Imp->mostraResultado();
+odbc_close($CnxODBC);
+?>

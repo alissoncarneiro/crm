@@ -1,0 +1,14 @@
+;Atualização Oasis
+
+[info]
+
+versao              = 4.0.1.45
+
+release             = 86
+data_release        = 2011-04-27 13:00:00
+versao_dependente   = 4.0.1.43
+release_dependente  = 85
+
+[log]
+
+log_alteracoes      = "-- Adicionado cadastro de candidatos."

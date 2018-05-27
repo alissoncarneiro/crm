@@ -1,0 +1,81 @@
+<?php
+header("Content-Type: text/html; charset=ISO-8859-1");
+include('../../conecta.php');
+$sql_modelo = "select * from is_modelo_orcamento where sn_envia_email=1";
+$qry_modelo = query($sql_modelo);
+?>
+<form action="envio_email/executa_envio_email.php" id="form_envio_email" method="post" enctype="multipart/form-data" onsubmit="return AIM.submit(this, {'onStart' : UploadstartCallback, 'onComplete' : UploadcompleteCallback});">
+<input type="hidden" name="pnumreg" id="pnumreg" value="<?php echo $_POST['pnumreg'];?>" />
+<input type="hidden" name="ptp_venda" id="ptp_venda" value="<?php echo $_POST['ptp_venda'];?>" />
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr>
+        <td>Modelo do envio</td>
+        <td>
+            <select id="select_id_modelo" name="select_id_modelo">
+                <option value="">Selecione um modelo</option>
+                <?php
+                while($ar_modelo = farray($qry_modelo)){
+                    echo '<option value="'.$ar_modelo['numreg'].'">'.$ar_modelo['nome_modelo_orcamento'].'</option>';
+                }
+                ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Enviar cópia (separar por ;)</td>
+        <td><textarea name="cc_emails" id="cc_emails" rows="4" cols="50"></textarea></td>
+    </tr>
+    <tr>
+        <td>Anexar Arquivo</td>
+        <td><div id="div_campo_arquivo_anexo"><input id="file_master" type="file" /></div></td>
+    </tr>
+</table>
+
+</form>
+<fieldset>
+    <legend>Arquivos Anexos</legend>
+    <ul id="ul_arquivos_anexos"></ul>
+</fieldset>
+
+<script>
+    NumeroArquivo = 0;
+    function CarregaCampoDeAnexo(){
+        $("#file_master").change(function(){
+            var CaminhoArquivo = $(this).val();
+            /* Criando botão de excluir anexo */
+            var DOMHTMLExcluir = $('<img src="img/btn_apagar.png" alt="Excluir" title="Excluir" NumeroArquivo="' + NumeroArquivo + '"/>');
+            DOMHTMLExcluir.click(function(){
+                if(confirm("Remover anexo ?")){
+                    var NArquivo  =$(this).attr("NumeroArquivo");
+                    $("#campo_arquivo_"+NArquivo).remove();
+                    $("#li_arquivo_"+NArquivo).remove();
+                }
+            }).css("cursor","pointer");
+
+            /* Adicionando 'li' com o nome do arquivo */
+            $("#ul_arquivos_anexos").append("<li id=\"li_arquivo_" + NumeroArquivo + "\"></li>");
+            $("#li_arquivo_" + NumeroArquivo).append(DOMHTMLExcluir);
+            $("#li_arquivo_" + NumeroArquivo).append(CaminhoArquivo);
+            $(this).attr("name","arquivo_anexo[]");
+            $(this).attr("id","campo_arquivo_" + NumeroArquivo);
+            $(this).css("display","none");
+
+            var NovoCampoArquivo = $("<input>");
+            NovoCampoArquivo.attr("type","file");
+            NovoCampoArquivo.attr("id","file_master");
+            $("#div_campo_arquivo_anexo").append(NovoCampoArquivo);
+            NumeroArquivo = NumeroArquivo +1;
+            CarregaCampoDeAnexo();
+        });
+    }
+    function UploadstartCallback(){
+        MaskLoading('Mostrar');
+        return true;
+    }
+    function UploadcompleteCallback(Resposta){
+        MaskLoading('Ocultar');
+    }
+    $(document).ready(function(){
+        CarregaCampoDeAnexo();
+    });
+</script>

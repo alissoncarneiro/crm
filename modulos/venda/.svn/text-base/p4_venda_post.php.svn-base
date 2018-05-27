@@ -1,0 +1,278 @@
+<?php
+/*
+ * p4_venda_acoes.php
+ * Autor: Alex
+ * 05/11/2010 14:50
+ * -
+ *
+ * Log de Alterações
+ * yyyy-mm-dd <Pessoa responsável> <Descrição das alterações>
+ */
+header("Content-Type: text/html; charset=ISO-8859-1",true);
+session_start();
+require('includes.php');
+/*
+ * Verifica se a váriável de tipo da venda foi preenchida.
+ */
+
+if($_POST['ptp_venda'] == 1 || $_POST['ptp_venda'] == 2){
+        if($_POST['ptp_venda'] == 1){
+            $Venda = new Orcamento($_POST['ptp_venda'],$_POST['pnumreg']);
+        }
+        elseif($_POST['ptp_venda'] == 2){
+            $Venda = new Pedido($_POST['ptp_venda'],$_POST['pnumreg']);
+        }
+} else{
+    echo getError('0040010001',getParametrosGerais('RetornoErro'));
+    exit;
+}
+
+$Usuario = new Usuario($_SESSION['id_usuario']);
+
+$_POST = uB::UrlDecodePost($_POST);
+/*
+#versao do encoding xml
+$DOM = new DOMDocument("1.0", "ISO-8859-1");
+#retirar os espacos em branco
+$DOM->preserveWhiteSpace = false;
+#gerar o codigo
+$DOM->formatOutput = true;
+#criando o nó principal (root)
+$Root = $DOM->createElement("resposta");
+*/
+$XML = '<'.'?xml version="1.0" encoding="ISO-8859-1"?'.'>
+    <resposta>
+        <status>{!STATUS!}</status>
+            <acao>{!ACAO!}</acao>
+            <url>{!URL!}</url>
+            <mensagem>{!MENSAGEM!}</mensagem>
+    </resposta>
+';
+
+$IdRepresentantePrincipal = $Venda->getRepresentantePrincipal();
+
+$VendaParametro = new VendaParametro();
+
+$Status = '';
+$Mensagem = '';
+
+if($_POST['prequisicao'] == 'finaliza_orcamento'){
+    if($Venda->PossuiItensSemPreco()){
+        $Status = 2;
+        $Mensagem = TextoParaXML(ucwords($Venda->getTituloVenda(false)).' possui itens sem preço. Não é permitido nestas condições.');
+    }
+    else{
+        /*
+         * Finalizando o orçamento e gerando um revisão
+         */
+        if($Venda->CompletaDigitacaoVendaBD()){
+            $Status = 1;
+            $Acao = 1;
+            $Mensagem = TextoParaXML('Orçamento finalizado com sucesso.');
+        }
+        else{
+            $Status = 2;
+            $Mensagem = TextoParaXML('Erro com a requisição.');
+        }        
+    }
+}
+elseif($_POST['prequisicao'] == 'reabre_orcamento'){
+    if($Venda->GeraRevisaoVenda()){
+        if($Venda->ReabreDigitacaoVendaBD()){
+            $Status = 1;
+            $Acao = 1;
+            $Mensagem = TextoParaXML('Orçamento reaberto com sucesso. Foi gerada a revisão Nº '.$Venda->NumeroRevisaoGerada.'.');
+        }
+        else{
+            $Status = 2;
+            $Mensagem = TextoParaXML('Erro com a requisição.');
+            if($Venda->Debug){
+                $Mensagem .= TextoParaXML($Venda->getMensagemDebug());
+            }
+        }
+    }
+    else{
+        $Status = 2;
+        $Mensagem = TextoParaXML('Erro com a requisição.');
+        if($Venda->Debug){
+            $Mensagem .= TextoParaXML($Venda->getMensagemDebug());
+        }
+    }
+}
+elseif($Venda->PossuiItensNaoComerciais()){
+    $Status = 2;
+    $Mensagem = TextoParaXML("Não permitido quando possui itens não comerciais.");
+}
+elseif($Venda->getQtdeRepresentantes() == 0){ /* Validando se possui representantes */
+    $Status = 2;
+    $Mensagem = TextoParaXML(ucwords($Venda->getTituloVenda(false)).' não possui nenhum representante/vendedor. Não é permitido salvar sem representante/vendedor.');
+}
+elseif($_POST['prequisicao'] == 'finaliza_venda'){
+    $Venda->ValidaPoliticaComercial();
+    if(!$Venda->getStatusPoliticaComercial()){//Se não está na política comercial envia para aprovação
+        $Venda->EnviaParaAprovacao($_POST['pjustificativaemaprovacaocomercial']);
+
+        $Status = 1;
+        $Mensagem = TextoParaXML($Venda->getMensagem());
+
+        //$Status = $DOM->createElement("status",1);
+        //$Mensagem = $DOM->createElement("mensagem",TextoParaXML($Venda->getMensagem()));
+    }
+    else{
+        if($Venda->isOrcamento()){//Se for um orçamento
+            $Venda->GravaCFOPVendaBD();
+            $NumregNovoPedido = $Venda->TransformarEmPedidoBD();//Criando o pedido
+            if(is_numeric($NumregNovoPedido)){//Se foi gerado um pedido
+                $Venda->CompletaDigitacaoVendaBD();
+                //$Status = $DOM->createElement("status",1);
+                //$Mensagem = $DOM->createElement("mensagem",TextoParaXML($Venda->getMensagem()));
+                $Status = 1;
+                $Mensagem = TextoParaXML($Venda->getMensagem());
+            }
+            else{//Se não foi gerado o pedido
+                //$Status = $DOM->createElement("status",2);
+                //$Mensagem = $DOM->createElement("mensagem",TextoParaXML($Venda->getMensagem()));
+                $Status = 1;
+                $Mensagem = TextoParaXML($Venda->getMensagem());
+            }
+        }
+        else{
+            $Acao = 1;
+            $Venda->GravaCFOPVendaBD();
+            $Venda->PreencheIdVendaClienteBD();
+            $Venda->CompletaDigitacaoVendaBD();
+            $Status = 1;
+            $Mensagem = TextoParaXML('Pedido finalizado.');
+        }
+        if($Status == 1 && $Venda->isOrcamento()){
+            $Acao = 3;
+            $Url = new Url();
+            $Url->setUrl($_POST['url_retorno']);
+            $Url->AlteraParam('ptp_venda',2);
+            $Url->AlteraParam('pnumreg',((is_numeric($NumregNovoPedido))?$NumregNovoPedido:$Venda->getNumregVenda()));
+            $Url->AlteraParam('pfuncao','pedido');
+            $Url->AlteraParam('ppagina','p4');
+            $Url = html_entity_decode(TextoParaXML($Url->getUrl()));
+        }
+    }
+}
+elseif($_POST['prequisicao'] == 'aprovar'){
+    $Venda->ValidaPoliticaComercial();
+    if($Venda->getStatusPoliticaComercial()){//Se a venda está dentro da política comercial, não permite aprovação){
+        //$Status = $DOM->createElement("status",2);
+        //$Mensagem = $DOM->createElement("mensagem",TextoParaXML('Não é permitido aprovar um '.$Venda->getTituloVenda(false,true).' que não esteja em aprovação comercial!'));
+
+        $Status = 2;
+        $Mensagem = TextoParaXML('Não é permitido aprovar um '.$Venda->getTituloVenda(false,true).' que não esteja em aprovação comercial!');
+
+    }
+    elseif(!$Usuario->getPermissao('sn_permite_aprovar_venda')){//Se o usuário não possui permissão para aprovar a venda
+        //$Status = $DOM->createElement("status",2);
+        //$Mensagem = $DOM->createElement("mensagem",TextoParaXML('Usuário logado não possui permissão para aprovar o '.$Venda->getTituloVenda(false,true)));
+
+        $Status = $DOM->createElement("status",2);
+        $Mensagem = TextoParaXML('Usuário logado não possui permissão para aprovar o '.$Venda->getTituloVenda(false,true));
+    }
+    else{//Aprovando a venda
+        $Venda->GravaCFOPVendaBD();
+        if($Venda->AprovaVendaBD($_POST['pjustificativaaprovreprovcomercial'])){
+            $Status = 1;
+        }
+        else{
+            $Status = 2;
+        }
+        //$Status = $DOM->createElement("status",$Status);
+        //$Mensagem = $DOM->createElement("mensagem",TextoParaXML($Venda->getMensagem()));
+
+        $Status = $Status;
+        $Mensagem = TextoParaXML($Venda->getMensagem());
+    }
+}
+elseif($_POST['prequisicao'] == 'reprovar'){
+    $Venda->ValidaPoliticaComercial();
+    if($Venda->getStatusPoliticaComercial()){//Se a venda está dentro da política comercial, não permite reprovação){
+        //$Status = $DOM->createElement("status",2);
+        //$Mensagem = $DOM->createElement("mensagem",TextoParaXML('Não é permitido reprovar um '.$Venda->getTituloVenda(false,true).' que não esteja em aprovação comercial!'));
+        $Status = $DOM->createElement("status",2);
+        $Mensagem = $DOM->createElement("mensagem",TextoParaXML('Não é permitido reprovar um '.$Venda->getTituloVenda(false,true).' que não esteja em aprovação comercial!'));
+
+    }
+    elseif(!$Usuario->getPermissao('sn_permite_reprovar_venda')){//Se o usuário não possui permissão para reprovar a venda
+
+        //$Status = $DOM->createElement("status",2);
+        //$Mensagem = $DOM->createElement("mensagem",TextoParaXML('Usuário logado não possui permissão para reprovar o '.$Venda->getTituloVenda(false,true)));
+
+        $Status = 2;
+        $Mensagem = TextoParaXML('Usuário logado não possui permissão para reprovar o '.$Venda->getTituloVenda(false,true));
+    }
+    else{//Reprovando a venda
+        if($Venda->ReprovaVendaBD($_POST['pjustificativaaprovreprovcomercial'])){
+            $Status = 1;
+        }
+        else{
+            $Status = 2;
+        }
+        //$Status = $DOM->createElement("status",$Status);
+        //$Mensagem = $DOM->createElement("mensagem",TextoParaXML($Venda->getMensagem()));
+
+        $Status = $Status;
+        $Mensagem = TextoParaXML($Venda->getMensagem());
+    }
+}
+elseif($_POST['prequisicao'] == 'cria_pedido_bonificacao'){
+    $Status = $Venda->CriaPedidoBonificacao();
+    $Status = ($Status === true)?1:2;
+    $Mensagem = TextoParaXML($Venda->getMensagem());
+    $Acao = 2;
+    $Url = new Url();
+    $Url->setUrl($_POST['url_retorno']);
+    $Url->AlteraParam('ptp_venda',2);
+    $Url->AlteraParam('pnumreg',$Venda->getNumregPedidoBonificacao());
+    $Url->AlteraParam('pfuncao','pedido');
+    $Url->AlteraParam('ppagina','p2');
+    $Url = html_entity_decode(TextoParaXML($Url->getUrl()));
+}
+elseif($_POST['prequisicao'] == 'restaura_revisao'){
+    if($Venda->RestauraRevisao($_POST['pnumreg_revisao'])){
+        $Status = 1;
+        $Acao = 1;
+        $Mensagem = TextoParaXML('Revisão restaurada com sucesso.');
+    }
+    else{
+        $Status = 2;
+        $Mensagem = TextoParaXML($Venda->getMensagem().'Erro com a requisição.');
+    }
+}
+elseif($_POST['prequisicao'] == 'perder_orcamento'){
+    if($Venda->PerdeOrcamento()){
+        $Status = 1;
+        $Acao = 1;
+        $Mensagem = TextoParaXML('Orçamento perdido.');
+    }
+    else{
+        $Status = 2;
+        $Mensagem = TextoParaXML($Venda->getMensagem().'Erro com a requisição.');
+    }
+}
+$XML = str_replace('{!STATUS!}',$Status,$XML);
+$XML = str_replace('{!ACAO!}',$Acao,$XML);
+$XML = str_replace('{!URL!}',$Url,$XML);
+$Mensagem = ($Mensagem == '')?TextoParaXML($Venda->getMensagem()):$Mensagem;
+$XML = str_replace('{!MENSAGEM!}',$Mensagem,$XML);
+header("Content-Type: text/xml");
+echo $XML;
+
+/*
+#adiciona o nó contato em (root)
+$Root->appendChild($Status);
+$Root->appendChild($Mensagem);
+
+$DOM->appendChild($Root);
+# Para salvar o arquivo, descomente a linha
+//$DOM->save("contatos.xml");
+#cabeçalho da página
+header("Content-Type: text/xml");
+# imprime o xml na tela
+print $DOM->saveXML();
+*/
+?>

@@ -1,0 +1,1 @@
+<graph caption='Funil de Vendas' xAxisName='Fase' yAxisName='R$' showNames='1' decimalPrecision='0' formatNumberScale='0'><set name='Fechamento : 733.500,00' value='16' color='00FF00' alpha='85' link="javascript:abre_tela_nova('../../gera_cad_lista.php?pfuncao=opo_cad_lista&pdrilldown=1&pfixo=id_opor_ciclo_fase = @sf13@sf','grafdet','900','590','1');" /></graph>

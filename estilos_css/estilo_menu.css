@@ -1,0 +1,248 @@
+	
+	/**** LINKS DOS NOMES DAS CATEGORIAS ****/
+	/* Link em estado natural*/
+	a.link_menu:link{color:#FFFFFF;text-decoration:none;font-weight:normal;font-family:verdana;font-size:11px}
+	/* Link depois de visitado*/
+	a.link_menu:visited{color:#FFFFFF;text-decoration:none;font-weight:normal;font-family:verdana;font-size:11px}
+	/* Link ao passar o mouse*/
+	a.link_menu:hover{color:#FFFFFF;text-decoration:none;font-weight:normal;font-family:verdana;font-size:11px}
+	a.link_menu img, .menu_btn a img{
+		border:none;	
+	}
+	/**** FIM LINKS DOS NOMES DAS CATEGORIAS ****/
+	
+	/**** CELULAS DOS NOMES DAS CATEGORIAS ****/
+	
+	td.cinza{
+		background:#CCC
+	}
+
+
+
+	.titulo_menu{	   
+		width:133px;
+		height:25px;
+		border:0px solid blue;
+		padding: 0px 0px 0px 0px;
+	}
+	/**** FIM CELULAS DOS NOMES DAS CATEGORIAS ****/
+	
+	/*++++++++++++ FIM RELATIVO AS CATEGORIAS +++++++++++++++++++++*/		
+	
+	
+	
+	/*++++++++++++  RELATIVO AS SUB-CATEGORIAS +++++++++++++++++++++*/
+	
+	/**** LINKS DOS NOMES DAS SUB-CATEGORIAS ****/
+	/* Link em estado natural*/
+	a.link_smenu:link{color:#000000;text-decoration:none;font-weight:normal;font-family:arial;font-size:12px}
+	/* Link depois de visitado*/
+	a.link_smenu:visited{color:#000000;text-decoration:none;font-weight:normal;font-family:arial;font-size:12px}
+	/* Link ao passar o mouse*/
+	a.link_smenu:hover{color:#000000;text-decoration:underline;font-weight:bold;font-family:arial;font-size:12px}
+	/**** LINKS DOS NOMES DAS SUB-CATEGORIAS ****/
+		
+	/**** CELULAS DOS NOMES DAS SUB-CATEGORIAS ****/
+	/*padding top right bottom left */
+	.itens_menu{
+		width:133px;
+		height:25px;
+		border:0px solid red;
+		padding: 0px 0px 0px 0px;
+	}	
+	/**** FIM CELULAS DOS NOMES DAS SUB-CATEGORIAS ****/
+	
+	/**** CELULAS DE REVEZAMENTO DOS NOMES DAS SUB-CATEGORIAS ****/
+	.itens_menu_r{
+	   background-color:#0099ff;
+		background-image:url(none);
+		width:133px;
+		height:25px;
+		border:0px solid red;
+		padding: 0px 0px 0px 0px;		
+	}	
+	/**** FIM CELULAS DE REVEZAMENTO DOS NOMES DAS SUB-CATEGORIAS ****/
+	
+	/*++++++++++++ FIM RELATIVO AS SUB-CATEGORIAS +++++++++++++++++++++*/	
+	<!-- ||**||**||** FIM FOLHA DE ESTILOS (CSS) ||**||**||** -->
+
+
+	/**** MENU DROPDOWN BY VITOR ****/
+.menu > li > a:hover, .menu ul li a:hover {
+	text-decoration: underline !important;
+}
+.menu > li > a, .menu ul li a {
+	text-decoration: none ;
+	padding:10px 0;
+	height: auto;
+}
+
+.menu > li > a > span, .menu ul li a span {
+	margin-right:5px;
+}
+
+.menu > li > a > img, .menu ul li a img {
+	margin-left:5px;
+	vertical-align:middle;
+}
+
+ul.menu, ul.menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.menu {
+	width: auto;
+	height: auto;
+	-webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,.73), 0px 0px 18px 0px rgba(0,0,0,.13);
+	-moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,.73), 0px 0px 18px 0px rgba(0,0,0,.13);
+	box-shadow: 0px 1px 3px 0px rgba(0,0,0,.73), 0px 0px 18px 0px rgba(0,0,0,.13);
+}
+.menu > li > a {
+	background-color: #616975;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#517289),to(#0c2f50));
+	background-image: -webkit-linear-gradient(top, #517289, #0c2f50);
+	background-image: -moz-linear-gradient(top, #517289, #0c2f50);
+	background-image: -o-linear-gradient(top, #517289, #0c2f50);
+	background-image: -ms-linear-gradient(top, #517289, #0c2f50);
+	background-image: linear-gradient(top, #517289, #0c2f50);
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#517289', EndColorStr='#0c2f50');
+	border-bottom: 1px solid #1c2730;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #878e98;
+	-moz-box-shadow: inset 0px 1px 0px 0px #878e98;
+	box-shadow: inset 0px 1px 0px 0px #878e98;
+	width: 100%;
+	display: block;
+	position: relative;
+	font-family: Verdana, Geneva, sans-serif;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+}
+.menu ul li a {
+	background: #fff;
+	border-bottom: 1px solid #efeff0;
+	width: 100%;
+	line-height: 2.75em;
+	text-indent: 2.75em;
+	display: block;
+	position: relative;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	font-weight: 400;
+	color: #878d95;
+}
+.menu ul li:last-child a {
+	border-bottom: 1px solid #33373d;
+}
+.menu > li > a:hover, .menu > li > a.active {
+	background-color: #35afe3;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#3db8eb),to(#005a86)));
+	background-image: -webkit-linear-gradient(top, #3db8eb, #005a86);
+	background-image: -moz-linear-gradient(top, #3db8eb, #005a86);
+	background-image: -o-linear-gradient(top, #3db8eb, #005a86);
+	background-image: -ms-linear-gradient(top, #3db8eb, #005a86);
+	background-image: linear-gradient(top, #3db8eb, #005a86);
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#3db8eb', EndColorStr='#2698db');
+	border-bottom: 1px solid #1c2730;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #69c8f0;
+	-moz-box-shadow: inset 0px 1px 0px 0px #69c8f0;
+	box-shadow: inset 0px 1px 0px 0px #69c8f0;
+}
+.menu > li > a.active {
+	border-bottom: 1px solid #1a638f;
+}
+.menu > li > a:before {
+	content: '';
+/*	background-image: url(../images/sprite.png);
+	background-repeat: no-repeat;
+*/	font-size: 36px;
+	height: 1em;
+  	width: 1em;
+	position: absolute;
+  	left: 0;
+	top: 50%;
+	margin: -.5em 0 0 0;
+}
+.item1 > a:before {
+	background-position: 0 0;
+}
+.item2 > a:before {
+	background-position: -38px 0;
+}
+.item3 > a:before {
+	background-position: 0 -38px;
+}
+.item4 > a:before {
+	background-position: -38px -38px;
+}
+.item5 > a:before {
+	background-position: -76px 0;
+}
+/*.menu > li > a span {
+	font-size: 0.857em; 
+	display: inline-block;
+	position: absolute;
+	right: 1em;
+	top: 50%; 
+	background: #48515c;
+	line-height: 1em;
+	height: 1em;
+	padding: .4em .6em;
+	margin: -.8em 0 0 0; 
+	color: #fff;
+	text-indent: 0;
+	text-align: center;
+	-webkit-border-radius: .769em;
+	-moz-border-radius: .769em;
+	border-radius: .769em;
+	-webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, .26), 0px 1px 0px 0px rgba(255, 255, 255, .15);
+	-moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, .26), 0px 1px 0px 0px rgba(255, 255, 255, .15);
+	box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, .26), 0px 1px 0px 0px rgba(255, 255, 255, .15);
+	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+	font-weight: 500;
+}*/
+.menu > li > a:hover span, .menu > li a.active span {
+	background: #2173a1;
+}
+.menu > li > ul li a:before{
+	content: '▶';
+	font-size: 11px;
+	color: #bcbcbf;
+	position: absolute;
+	width: 1em;
+	height: 1em;
+	top: 0;
+	left: -2.7em;
+}
+
+.menu > li > ul li:hover a,
+.menu > li > ul li:hover a span,
+.menu > li > ul li:hover a:before {
+	color: #333;
+}
+
+
+.menu ul > li > a span {
+	font-size: 0.857em; 
+	display: inline-block;
+	position: absolute;
+	right: 1em;
+	top: 50%; /
+	background: #fff;
+	border: 1px solid #d0d0d3;
+	line-height: 1em;
+	height: 1em;
+	padding: .4em .7em;
+	margin: -.9em 0 0 0; 
+	color: #878d95;
+	text-indent: 0;
+	text-align: center;
+	-webkit-border-radius: .769em;
+	-moz-border-radius: 769em;
+	border-radius: 769em;
+	text-shadow: 0px 0px 0px rgba(255,255,255,.01));
+}
+
+
+	<!-- ||**||**||** FIM MENU DROPDOWN BY VITOR ||**||**||** -->

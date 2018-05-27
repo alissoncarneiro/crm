@@ -1,0 +1,208 @@
+<?php
+session_start();
+header("Cache-Control: no-cache");
+header("Pragma: no-cache");
+header("Content-Type: text/html; charset=ISO-8859-1");
+
+require('includes.php');
+
+$Usuario = new Usuario($_SESSION['id_usuario']);
+/*
+ * Verifica se a váriável de tipo da venda foi preenchida.
+ */
+if($_POST['ptp_venda'] != 1 && $_POST['ptp_venda'] != 2){
+    echo getError('0040010001',getParametrosGerais('RetornoErro'));
+    exit;
+} elseif(empty($_POST['pnumreg'])){
+    echo getError('0040010001',getParametrosGerais('RetornoErro'));
+    exit;
+} else{
+    if($_POST['ptp_venda'] == 1){
+        $Venda = new Orcamento($_POST['ptp_venda'],$_POST['pnumreg']);
+    } else{
+        $Venda = new Pedido($_POST['ptp_venda'],$_POST['pnumreg']);
+    }
+    /*
+     * Tratando os campos
+     */
+    $Venda->pfuncao = $_POST['pfuncao'];
+}
+if($_POST['pincluir'] == 'true'){
+?>
+<fieldset>
+    <legend>Novo Participante da Venda</legend>
+    <strong>Tipo Participa&ccedil;&atilde;o:</strong><br />
+    <select id="id_tp_participacao_venda" name="id_tp_participacao_venda">
+        <option value="">--Selecione--</option>
+        <?php
+        $SqlTipoParticipacaoVenda = "SELECT numreg,nome_tp_participacao_venda FROM is_tp_participacao_venda WHERE NOT numreg  IN(SELECT DISTINCT id_tp_participacao FROM ".$Venda->getTabelaVendaRepresentante()." WHERE ".$Venda->getCampoChaveTabelaVendaRepresentante()." = '".$Venda->getNumregVenda()."') ORDER BY numreg";
+        $QryTipoParticipacaoVenda = query($SqlTipoParticipacaoVenda);
+        while($ArTipoParticipacaoVenda = farray($QryTipoParticipacaoVenda)){
+            echo '<option value="'.$ArTipoParticipacaoVenda['numreg'].'">'.$ArTipoParticipacaoVenda['nome_tp_participacao_venda'].'</option>';
+        }
+        ?>
+    </select>
+    <br />
+    <strong>Participante:</strong><br />
+    <select id="id_participante" name="id_participante">
+        <option value="">--Selecione--</option>
+        <?php
+        $SqlRepresentantes = "SELECT numreg,nome_usuario FROM is_usuario WHERE id_representante != '' AND NOT numreg  IN(SELECT DISTINCT id_representante FROM ".$Venda->getTabelaVendaRepresentante()." WHERE ".$Venda->getCampoChaveTabelaVendaRepresentante()." = '".$Venda->getNumregVenda()."')";
+        $QryRepresentantes = query($SqlRepresentantes);
+        while($ArRepresentantes = farray($QryRepresentantes)){
+            echo '<option value="'.$ArRepresentantes['numreg'].'">'.$ArRepresentantes['nome_usuario'].'</option>';
+        }
+        ?>
+    </select>
+    <br />
+    <strong>% de Comissão:</strong><br />
+    <input type="text" id="pct_comissao" class="venda_campo_desconto">
+    <hr size="1" />
+    <input type="button" class="botao_jquery" value="Adicionar" id="btn_adicionar_representante" style="cursor: pointer"/>
+</fieldset>
+<script>
+    $(document).ready(function(){
+        $(".botao_jquery").button();
+        $("#btn_adicionar_representante").click(function(event){
+            var id_tp_participacao_venda    = $("#id_tp_participacao_venda").val();
+            var id_participante             = $("#id_participante").val();
+            var pct_comissao                = $("#pct_comissao").val();
+            var ptp_venda                   = $("#ptp_venda").val();
+            var pnumreg                     = $("#pnumreg").val();
+
+            if(id_tp_participacao_venda == ''){
+                alert('Selecione o tipo de participação.');
+                event.preventDefault();
+                return false;
+            }
+            if(id_participante == ''){
+                alert('Selecione um participante.');
+                event.preventDefault();
+                return false;
+            }
+            if(pct_comissao == ''){
+                alert('Preencha uma comissão válida.');
+                event.preventDefault();
+                return false;
+            }
+            if(confirm('Deseja adicionar esse representante ?')){
+                $.ajax({
+                    url: "p4_venda_participantes_post.php",
+                    global: false,
+                    type: "POST",
+                    data: ({
+                        Acao:'adicionar',
+                        id_tp_participacao_venda: id_tp_participacao_venda,
+                        id_participante: id_participante,
+                        pct_comissao: pct_comissao,
+                        ptp_venda: ptp_venda,
+                        pnumreg: pnumreg
+                    }),
+                    dataType: "xml",
+                    async: true,
+                    beforeSend: function(){
+
+                    },
+                    error: function(){
+                        alert('Erro com a requisição');
+                        $(this).dialog("close");
+                        $(this).dialog("destroy");
+                    },
+                    success: function(xml){
+                        $("#notify-container").notify("create",{
+                            title: 'Alerta',
+                            text: $(xml).find('mensagem').text()
+                        },{
+                            expires: 5000,
+                            speed: 500,
+                            sticky:true,
+                            stack: "above"
+                        });
+                        $("#jquery-dialog").dialog("close");
+                        $("#jquery-dialog").dialog("destroy");
+                        $("#jquery-dialog1").dialog("close");
+                        $("#jquery-dialog1").dialog("destroy");
+                        $("#btn_representantes_venda").click();
+                    }
+                });
+            }
+        }).css("cursor","pointer");
+    });
+</script>
+<?php
+}
+else{
+?>
+<form name="form_participantes_venda" action="#" onsubmit="return false;">
+    <table width="100%">
+        <tr bgcolor="#DAE8F4" class="tit_tabela">
+            <td>Participante</td>
+            <td>% Comissão</td>
+            <td>Tipo Participa&ccedil;&atilde;o</td>
+        </tr>
+        <?php
+        foreach($Venda->getVendaRepresentantes() as $IndiceRepresentante => $Representante){
+            $bg_color = ($i % 2 == 0)?'#EAEAEA':'#FFFFFF';
+            $i++;
+        ?>
+            <tr bgcolor="<?php echo $bg_color;?>">
+                <td><?php echo $Representante->getRepresentanteUsuario()->getNome();?></td>
+                <td style="vertical-align: middle;">
+                    <?php if(!$Venda->getDigitacaoCompleta() && $Usuario->getPermissao('sn_permite_alterar_comis_part')){ /* Se possui permissão para alterar a comissão */?>
+                    <input size="7" type="text" id="pct_comissao_<?php echo $Representante->getDadosVendaRepresentante('numreg');?>" class="venda_comis_participante" value="<?php echo $Venda->NFD($Representante->getDadosVendaRepresentante('pct_comissao'));?>">
+                    <img src="img/salvar_pequeno.png" alt="Alterar" title="Alterar" class="venda_btn_alterar_representante" NumregVendaRepresentante="<?php echo $Representante->getDadosVendaRepresentante('numreg');?>" />
+                    <?php } else { echo $Venda->NFD($Representante->getDadosVendaRepresentante('pct_comissao')); } ?>
+                </td>
+                <td><?php echo $Representante->getDescricaoTipoParticipacaoVenda();?></td>
+            </tr>
+        <?php } ?>
+    </table>
+</form>
+<div id="jquery-dialog1"></div>
+<script>
+    $(document).ready(function(){
+        $(".venda_btn_alterar_representante").click(function(){
+            if(confirm('Deseja alterar a comissão ?')){
+                var NumregVendaRepresentante = $(this).attr("NumregVendaRepresentante");
+                var pct_comissao = $("#pct_comissao_"+NumregVendaRepresentante).val();
+                $.ajax({
+                    url: "p4_venda_participantes_post.php",
+                    global: false,
+                    type: "POST",
+                    data: ({
+                        Acao:'alterar',
+                        NumregVendaRepresentante: NumregVendaRepresentante,
+                        pct_comissao: pct_comissao,
+                        pnumreg: $("#pnumreg").val(),
+                        ptp_venda: $("#ptp_venda").val()
+                    }),
+                    dataType: "xml",
+                    async: true,
+                    beforeSend: function(){
+
+                    },
+                    error: function(){
+                        alert('Erro com a requisição');
+                        $(this).dialog("close");
+                        $(this).dialog("destroy");
+                    },
+                    success: function(xml){
+                        $("#notify-container").notify("create",{
+                            title: 'Alerta',
+                            text: $(xml).find('mensagem').text()
+                        },{
+                            expires: 5000,
+                            speed: 500,
+                            sticky:true,
+                            stack: "above"
+                        });
+                        $("#jquery-dialog").dialog("close");
+                        $("#jquery-dialog").dialog("destroy");
+                        $("#btn_representantes_venda").click();
+                    }
+                });
+            }
+        }).css("cursor","pointer");
+    });
+</script>
+<?php } ?>

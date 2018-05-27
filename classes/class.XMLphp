@@ -1,0 +1,24 @@
+<?php
+
+/*
+ * class.XMLphp.php
+ * Autor: Alex
+ * 08/11/2010 14:08
+ * -
+ *
+ * Log de Alterações
+ * yyyy-mm-dd <Pessoa responsável> <Descrição das alterações>
+ */
+
+class XMLOasis{
+    private $XML = array();
+
+    public function AdicionaTag($NomeTag){
+        $this->XML[$NomeTag] = array();
+    }
+    public function AdicionaAtributo($NomeAtributo, $ValorAtributo){
+        
+    }
+
+}
+?>

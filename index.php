@@ -1,13 +1,7 @@
 <?php
-
-    //phpinfo();die;
-
     @session_start( );
     header('Content-Type: text/html; charset=utf-8');
-
-
     require_once( "conecta.php" );
-
     $a_versao = farray( query( "select versao from is_sistema_atualizacao order by numero_release desc" ) );
     if ( $a_versao['versao'] )    {
         $_SESSION['versao'] = $a_versao['versao'];

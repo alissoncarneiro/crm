@@ -11,7 +11,6 @@ $id_sistema     = "CRM";
 $_SESSION['id_sistema'] = 'CRM';
 ?>
 <div id="principal" >
-
     <div id="topo">
         <table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
             <tr>
@@ -136,5 +135,3 @@ $_SESSION['id_sistema'] = 'CRM';
             </td>
         </tr>
     </table>
-</div>
-
